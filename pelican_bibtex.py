@@ -76,7 +76,7 @@ def add_publications(generator):
             else:
                 return formatted_title
 
-        def format_inproceedings(self, e):
+        def get_inproceedings_template(self, e):
             template = toplevel[
                 self.format_bold_title(e, 'title'),
                 Symbol('newline'),
@@ -94,9 +94,9 @@ def add_publications(generator):
                 sentence[optional_field('note')],
                 self.format_web_refs(e),
             ]
-            return template.format_data(e)
+            return template
 
-        def format_article(self, e):
+        def get_article_template(self, e):
             volume_and_pages = first_of[
                 # volume and pages, with optional issue number
                 optional[
@@ -121,9 +121,9 @@ def add_publications(generator):
                 sentence[optional_field('note')],
                 self.format_web_refs(e),
             ]
-            return template.format_data(e)
+            return template
 
-        def format_techreport(self, e):
+        def get_techreport_template(self, e):
             template = toplevel[
                 self.format_bold_title(e, 'title'),
                 Symbol('newline'),
@@ -144,7 +144,10 @@ def add_publications(generator):
                 sentence[optional_field('note')],
                 self.format_web_refs(e),
             ]
-            return template.format_data(e)
+            return template
+
+        def format_entry(self, label, entry, bib_data=None):
+            return super().format_entry(label, entry, bib_data)
 
     publications = []
 
